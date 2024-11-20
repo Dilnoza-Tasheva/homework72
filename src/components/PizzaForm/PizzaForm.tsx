@@ -48,7 +48,7 @@ const PizzaForm: React.FC<Props> = ({addNewPizza, existingPizza = initialStateFo
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <h3>Add new pizza</h3>
+        <h3>{isEdit ? 'Edit' : 'Add new'} pizza</h3>
         <div className="form-group mb-2">
           <label htmlFor="title">Title: </label>
           <input

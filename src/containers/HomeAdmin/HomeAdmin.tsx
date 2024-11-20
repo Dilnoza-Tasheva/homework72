@@ -2,8 +2,8 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectFetchPizzasLoading, selectPizzas } from '../../store/slices/PizzaSlice.ts';
-import { useCallback, useEffect, useState } from 'react';
-import { fetchAllPizzas } from '../../store/thunks/PizzaThunks.ts';
+import { useCallback, useEffect } from 'react';
+import { deleteOnePizza, fetchAllPizzas } from '../../store/thunks/PizzaThunks.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
 
 
@@ -12,7 +12,6 @@ const HomeAdmin = () => {
   const navigate = useNavigate();
   const pizzas = useAppSelector(selectPizzas);
   const isFetchLoading = useAppSelector(selectFetchPizzasLoading);
-  const [selectedPizza, setSelectedPizza] = useState<{id: string; title: string; price: number; imageUrl: string} | null>(null);
 
   const fetchPizzas = useCallback(async() => {
     await dispatch(fetchAllPizzas());
@@ -23,7 +22,15 @@ const HomeAdmin = () => {
   },[fetchPizzas]);
 
 
+  const deletePizza = async(pizzaId: string) => {
+    await dispatch(deleteOnePizza(pizzaId));
+    dispatch(fetchAllPizzas());
+  };
 
+  const editPizza = (pizzaId: string) => {
+      navigate(`/admin/editPizza/${pizzaId}`);
+
+  };
 
   return (
     <div>
@@ -45,8 +52,7 @@ const HomeAdmin = () => {
               <li
                 key={pizza.id}
                 className="list-group-item shadow-sm rounded my-3 p-3"
-                style={{ backgroundColor: '#f9f9f9' }}
-                onClick={() => setSelectedPizza(pizza)}>
+                style={{ backgroundColor: '#f9f9f9' }}>
                 <div className="row align-items-center">
                   <div className="col-md-2 text-center">
                     <img
@@ -64,8 +70,8 @@ const HomeAdmin = () => {
                   </div>
 
                   <div className="col-md-3 text-end">
-                    <button className="btn btn-outline-success btn-sm me-2">Edit</button>
-                    <button className="btn btn-outline-danger btn-sm">Delete</button>
+                    <button className="btn btn-outline-success btn-sm me-2" onClick={() => editPizza(pizza.id)}>Edit</button>
+                    <button className="btn btn-outline-danger btn-sm" onClick={() => deletePizza(pizza.id)}>Delete</button>
                   </div>
                 </div>
               </li>

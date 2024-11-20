@@ -27,3 +27,26 @@ export const fetchAllPizzas = createAsyncThunk<IPizza[], void>(
     return pizzas;
   }
 );
+
+export const deleteOnePizza = createAsyncThunk<void, string>(
+  'pizzas/deleteOnePizza',
+  async (pizzaId) => {
+    await axiosApi.delete(`pizzas/${pizzaId}.json`);
+  }
+);
+
+export const getOnePizzaById = createAsyncThunk<IPizzaMutation | null, string>(
+  'pizzas/getOnePizzaById',
+  async (pizzaId) => {
+    const response = await axiosApi<IPizzaMutation | null>(`pizzas/${pizzaId}.json`);
+    if (!response.data) return null;
+    return response.data;
+  }
+);
+
+export const editPizza = createAsyncThunk<void, {pizzaId: string, pizza: IPizzaMutation}>(
+  'pizzas/editPizza',
+   async({pizzaId, pizza}) => {
+    await axiosApi.put(`pizzas/${pizzaId}.json`, {...pizza});
+   }
+);
