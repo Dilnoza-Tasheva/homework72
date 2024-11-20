@@ -1,16 +1,17 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { NavLink, useNavigate } from 'react-router-dom';
 import { selectFetchPizzasLoading, selectPizzas } from '../../store/slices/PizzaSlice.ts';
 import { useCallback, useEffect } from 'react';
 import { fetchAllPizzas } from '../../store/thunks/PizzaThunks.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
+import { addPizza, selectCartPizzas } from '../../store/slices/CartSlice.ts';
+import { IPizza } from '../../types.ds.ts';
 
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const pizzas = useAppSelector(selectPizzas);
   const isFetchLoading = useAppSelector(selectFetchPizzasLoading);
+  const cartPizzas = useAppSelector(selectCartPizzas);
 
   const fetchPizzas = useCallback(async() => {
     await dispatch(fetchAllPizzas());
@@ -20,6 +21,13 @@ const Home = () => {
     void fetchPizzas();
   },[fetchPizzas]);
 
+  const addPizzaToCart = (pizza: IPizza) => {
+    dispatch(addPizza(pizza));
+  };
+
+  const totalAmountOfPizzas = cartPizzas.reduce((acc, cartItem) => {
+    return acc + cartItem.pizza.price * cartItem.amount;
+  }, 0);
 
 
   return (
@@ -37,7 +45,9 @@ const Home = () => {
               <li
                 key={pizza.id}
                 className="list-group-item shadow-sm rounded my-3 p-3"
-                style={{ backgroundColor: '#f9f9f9' }}>
+                style={{ backgroundColor: '#f9f9f9' }}
+                onClick={() => addPizzaToCart(pizza)}
+              >
                 <div className="row align-items-center">
                   <div className="col-md-2 text-center">
                     <img
@@ -59,6 +69,17 @@ const Home = () => {
           </ul>
         )}
       </div>
+
+      {cartPizzas.length > 0 && (
+        <div className=" bg-success-subtle border-top p-3 shadow rounded">
+          <div className="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 className="mb-0">Your total: <span>{totalAmountOfPizzas}</span> KGS</h5>
+            </div>
+            <button className="btn btn-success">Checkout</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

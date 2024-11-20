@@ -10,7 +10,7 @@ const ToolBar = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-primary-subtle">
         <div className="container">
-          <NavLink to="/" className="text-decoration-none"><span className="navbar-brand mb-0 text-white fs-2 text-muted">Grab a Pizza</span></NavLink>
+          <NavLink to="/" className="text-decoration-none"><span className="navbar-brand mb-0 text-white fs-2 text-muted">Grab a bite</span></NavLink>
 
           <div className="ms-auto">
             <ul className="navbar-nav">
