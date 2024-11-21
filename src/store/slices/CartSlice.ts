@@ -44,10 +44,12 @@ const pizzaCartSlice = createSlice({
         }
         return cartPizza;
       });
+    },
+    deletePizzaFromCart: (state, {payload: pizzaId}: PayloadAction<string>) => {
+      state.pizzasCart = state.pizzasCart.filter(cartPizza => cartPizza.pizza.id !== pizzaId);
     }
-
-  }
+  },
 });
 
 export const pizzaCartReducer = pizzaCartSlice.reducer;
-export const {addPizza, clearPizzaCart, updatePizzaCart} = pizzaCartSlice.actions;
+export const {addPizza, clearPizzaCart, updatePizzaCart,deletePizzaFromCart} = pizzaCartSlice.actions;

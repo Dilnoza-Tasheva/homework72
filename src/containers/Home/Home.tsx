@@ -3,9 +3,10 @@ import { selectFetchPizzasLoading, selectPizzas } from '../../store/slices/Pizza
 import { useCallback, useEffect, useState } from 'react';
 import { fetchAllPizzas } from '../../store/thunks/PizzaThunks.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
-import { addPizza, selectCartPizzas } from '../../store/slices/CartSlice.ts';
+import { addPizza, deletePizzaFromCart, selectCartPizzas } from '../../store/slices/CartSlice.ts';
 import { IPizza } from '../../types.ds.ts';
 import Modal from '../../components/UI/Modal/Modal.tsx';
+import { confirmPizzaOrder } from '../../store/thunks/CartThunks.ts';
 
 
 const Home = () => {
@@ -36,6 +37,15 @@ const Home = () => {
   };
 
   const closeModal = () => {
+    setModal(false);
+  };
+
+  const deletePizzaFromOrder = (pizzaId: string) => {
+    dispatch(deletePizzaFromCart(pizzaId));
+  };
+
+  const confirmCart = () => {
+    dispatch(confirmPizzaOrder({cartPizzas}));
     setModal(false);
   };
 
@@ -100,7 +110,7 @@ const Home = () => {
                 <div className="d-flex justify-content-between">
                   <span>{cartItem.pizza.title} x {cartItem.amount}</span>
                   <span>{cartItem.pizza.price * cartItem.amount} KGS</span>
-                  <button className="btn btn-danger">Delete</button>
+                  <button className="btn btn-danger btn-sm" onClick={() => deletePizzaFromOrder(cartItem.pizza.id)}>Delete</button>
                 </div>
               </li>
             ))}
@@ -114,7 +124,7 @@ const Home = () => {
         </div>
         <div className="d-flex justify-content-end mt-4">
           <button onClick={closeModal} className="btn btn-secondary me-2">Cancel</button>
-          <button className="btn btn-success">Confirm</button>
+          <button className="btn btn-success" onClick={confirmCart}>Confirm</button>
         </div>
       </Modal>
     </div>
