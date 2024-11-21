@@ -1,10 +1,11 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectFetchPizzasLoading, selectPizzas } from '../../store/slices/PizzaSlice.ts';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { fetchAllPizzas } from '../../store/thunks/PizzaThunks.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
 import { addPizza, selectCartPizzas } from '../../store/slices/CartSlice.ts';
 import { IPizza } from '../../types.ds.ts';
+import Modal from '../../components/UI/Modal/Modal.tsx';
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
   const pizzas = useAppSelector(selectPizzas);
   const isFetchLoading = useAppSelector(selectFetchPizzasLoading);
   const cartPizzas = useAppSelector(selectCartPizzas);
+  const [modal, setModal] = useState(false);
 
   const fetchPizzas = useCallback(async() => {
     await dispatch(fetchAllPizzas());
@@ -28,6 +30,14 @@ const Home = () => {
   const totalAmountOfPizzas = cartPizzas.reduce((acc, cartItem) => {
     return acc + cartItem.pizza.price * cartItem.amount;
   }, 0);
+
+  const showModal = () => {
+    setModal(true);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
 
 
   return (
@@ -71,15 +81,42 @@ const Home = () => {
       </div>
 
       {cartPizzas.length > 0 && (
-        <div className=" bg-success-subtle border-top p-3 shadow rounded">
+        <div className=" bg-white border-top p-3 shadow rounded">
           <div className="d-flex justify-content-between align-items-center">
             <div>
               <h5 className="mb-0">Your total: <span>{totalAmountOfPizzas}</span> KGS</h5>
             </div>
-            <button className="btn btn-success">Checkout</button>
+            <button className="btn btn-outline-success" onClick={showModal}>Checkout</button>
           </div>
         </div>
       )}
+
+      <Modal show={modal} title="Order preview" closeModal={closeModal} defaultModalButton={false}>
+        <div>
+          <h5>Your pizzas:</h5>
+          <ul className="list-group mb-3">
+            {cartPizzas.map((cartItem) => (
+              <li key={cartItem.pizza.id} className="list-group-item">
+                <div className="d-flex justify-content-between">
+                  <span>{cartItem.pizza.title} x {cartItem.amount}</span>
+                  <span>{cartItem.pizza.price * cartItem.amount} KGS</span>
+                  <button className="btn btn-danger">Delete</button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="d-flex justify-content-between">
+            <strong>Delivery: 150 KGS</strong>
+          </div>
+          <div className="d-flex justify-content-between mt-2 border-top pt-2">
+            <strong>Total: {totalAmountOfPizzas + 150}</strong>
+          </div>
+        </div>
+        <div className="d-flex justify-content-end mt-4">
+          <button onClick={closeModal} className="btn btn-secondary me-2">Cancel</button>
+          <button className="btn btn-success">Confirm</button>
+        </div>
+      </Modal>
     </div>
   );
 };
