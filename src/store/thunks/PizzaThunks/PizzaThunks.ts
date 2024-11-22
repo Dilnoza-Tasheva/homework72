@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { IPizza, IPizzaMutation, PizzasList } from '../../types.ds.ts';
-import axiosApi from '../../axiosApi.ts';
+import { IPizza, IPizzaMutation, PizzasList } from '../../../types.ds.ts';
+import axiosApi from '../../../axiosApi.ts';
 
 export const createPizza = createAsyncThunk<void, IPizzaMutation>(
   'pizzas/createPizza',

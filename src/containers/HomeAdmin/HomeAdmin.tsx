@@ -1,9 +1,9 @@
 
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectFetchPizzasLoading, selectPizzas } from '../../store/slices/PizzaSlice.ts';
+import { selectFetchPizzasLoading, selectPizzas } from '../../store/slices/PizzaSlice/PizzaSlice.ts';
 import { useCallback, useEffect } from 'react';
-import { deleteOnePizza, fetchAllPizzas } from '../../store/thunks/PizzaThunks.ts';
+import { deleteOnePizza, fetchAllPizzas } from '../../store/thunks/PizzaThunks/PizzaThunks.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
 
 

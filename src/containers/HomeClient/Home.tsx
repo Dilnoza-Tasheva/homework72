@@ -1,12 +1,12 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectFetchPizzasLoading, selectPizzas } from '../../store/slices/PizzaSlice.ts';
+import { selectFetchPizzasLoading, selectPizzas } from '../../store/slices/PizzaSlice/PizzaSlice.ts';
 import { useCallback, useEffect, useState } from 'react';
-import { fetchAllPizzas } from '../../store/thunks/PizzaThunks.ts';
+import { fetchAllPizzas } from '../../store/thunks/PizzaThunks/PizzaThunks.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
-import { addPizza, deletePizzaFromCart, selectCartPizzas } from '../../store/slices/CartSlice.ts';
+import { addPizza, deletePizzaFromCart, selectCartPizzas } from '../../store/slices/CartSlice/CartSlice.ts';
 import { IPizza } from '../../types.ds.ts';
 import Modal from '../../components/UI/Modal/Modal.tsx';
-import { confirmPizzaOrder } from '../../store/thunks/CartThunks.ts';
+import { confirmPizzaOrder } from '../../store/thunks/CartThunk/CartThunks.ts';
 
 
 const Home = () => {

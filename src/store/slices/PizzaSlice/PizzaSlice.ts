@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IPizza, IPizzaMutation } from '../../types.ds.ts';
-import { createPizza, deleteOnePizza, editPizza, fetchAllPizzas, getOnePizzaById } from '../thunks/PizzaThunks.ts';
-import { RootState } from '../../app/store.ts';
+import { IPizza, IPizzaMutation } from '../../../types.ds.ts';
+import { createPizza, deleteOnePizza, editPizza, fetchAllPizzas, getOnePizzaById } from '../../thunks/PizzaThunks/PizzaThunks.ts';
+import { RootState } from '../../../app/store.ts';
 
 interface PizzasState {
   pizzas: IPizza[];

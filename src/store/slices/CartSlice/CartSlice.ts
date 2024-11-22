@@ -1,5 +1,5 @@
-import { IPizza, PizzaCart } from '../../types.ds.ts';
-import { RootState } from '../../app/store.ts';
+import { IPizza, PizzaCart } from '../../../types.ds.ts';
+import { RootState } from '../../../app/store.ts';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CartState {

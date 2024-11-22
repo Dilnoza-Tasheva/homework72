@@ -1,6 +1,6 @@
 import ToolBar from './components/ToolBar/ToolBar.tsx';
 import { Route, Routes } from 'react-router-dom';
-import Home from './containers/Home/Home.tsx';
+import Home from './containers/HomeClient/Home.tsx';
 import HomeAdmin from './containers/HomeAdmin/HomeAdmin.tsx';
 import Orders from './containers/Orders/Orders.tsx';
 import NewPizza from './containers/NewPizza/NewPizza.tsx';

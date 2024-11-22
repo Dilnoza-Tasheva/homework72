@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosApi from '../../axiosApi.ts';
-import { clearPizzaCart } from '../slices/CartSlice.ts';
-import { IOrder, OrdersList, } from '../../types.ds.ts';
+import axiosApi from '../../../axiosApi.ts';
+import { clearPizzaCart } from '../../slices/CartSlice/CartSlice.ts';
 
 interface orderPayload {
   cartPizzas: {pizza: {id: string}; amount: number}[];
@@ -26,22 +25,5 @@ export const confirmPizzaOrder = createAsyncThunk<void, orderPayload>(
   }
 );
 
-export const fetchAllOrders = createAsyncThunk<IOrder[], void>(
-  'orders/fetchAllOrders',
-   async () => {
-    const response = await axiosApi<OrdersList | null>('orders.json');
-    const ordersList = response.data;
 
-    if (ordersList === null) {
-      return [];
-    }
-
-    const orders = Object.keys(ordersList).map((id) => ({
-      id,
-      ...ordersList[id],
-    }));
-
-    return orders;
-   }
-);
 

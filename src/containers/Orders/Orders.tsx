@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectOrders } from '../../store/slices/OrdersSlice.ts';
-import { selectFetchPizzasLoading, selectPizzas } from '../../store/slices/PizzaSlice.ts';
+import { selectOrders } from '../../store/slices/OrdersSlice/OrdersSlice.ts';
+import { selectFetchPizzasLoading, selectPizzas } from '../../store/slices/PizzaSlice/PizzaSlice.ts';
 import { useEffect } from 'react';
-import { fetchAllOrders } from '../../store/thunks/CartThunks.ts';
-import { fetchAllPizzas } from '../../store/thunks/PizzaThunks.ts';
+import { deleteOrder, fetchAllOrders } from '../../store/thunks/OrdersThunks/OrdersThunks.ts';
+import { fetchAllPizzas } from '../../store/thunks/PizzaThunks/PizzaThunks.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
 
 
@@ -40,6 +40,10 @@ const Orders = () => {
     return {id: order.id, pizzas: pizzasInOrder, totalSum};
   });
 
+  const completeOneOrder = (orderId: string) => {
+    dispatch(deleteOrder(orderId));
+  };
+
   if (isFetchLoading) {
     return (
       <Spinner/>
@@ -73,7 +77,7 @@ const Orders = () => {
                     <strong>Total:</strong>
                     <strong>{order.totalSum + 150} KGS</strong>
                   </div>
-                  <button className="btn btn-success btn-sm mt-3">Complete order</button>
+                  <button className="btn btn-success btn-sm mt-3" onClick={() => completeOneOrder(order.id)}>Complete order</button>
                 </div>
             </li>
           ))}

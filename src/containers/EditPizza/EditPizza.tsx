@@ -2,9 +2,9 @@
 import PizzaForm from '../../components/PizzaForm/PizzaForm.tsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectFetchPizzasLoading, selectOnePizza } from '../../store/slices/PizzaSlice.ts';
+import { selectFetchPizzasLoading, selectOnePizza } from '../../store/slices/PizzaSlice/PizzaSlice.ts';
 import { useCallback, useEffect } from 'react';
-import { editPizza, getOnePizzaById } from '../../store/thunks/PizzaThunks.ts';
+import { editPizza, getOnePizzaById } from '../../store/thunks/PizzaThunks/PizzaThunks.ts';
 import { IPizzaMutation } from '../../types.ds.ts';
 import Spinner from '../../components/UI/Spinner/Spinner.tsx';
 
